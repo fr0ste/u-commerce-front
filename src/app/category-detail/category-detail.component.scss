@@ -1,0 +1,253 @@
+:host {
+  display: block;
+}
+
+.category-detail {
+  padding: 2rem;
+
+  .mat-form-field {
+    min-width: 200px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0;
+    color: #666;
+  }
+
+  .category-banner {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    height: 12rem;
+    margin-bottom: 2rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2));
+
+      .text {
+        padding: 1rem 2rem;
+        color: white;
+
+        h1 {
+          font-size: 2rem;
+          font-weight: bold;
+          margin-bottom: 0.25rem;
+        }
+
+        p {
+          max-width: 500px;
+        }
+      }
+    }
+  }
+
+  .products {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .mat-card {
+    transition: box-shadow 0.3s ease;
+    border-radius: 1rem;
+    overflow: hidden;
+
+    &:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .mat-card-content {
+      padding: 1rem;
+
+      h3 {
+        color: #1e40af; // primary blue
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+
+      .price {
+        display: flex;
+        gap: 0.5rem;
+        align-items: baseline;
+
+        .current {
+          font-weight: 600;
+        }
+
+        .original {
+          text-decoration: line-through;
+          font-size: 0.875rem;
+          color: #888;
+        }
+      }
+
+      .rating {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        margin-top: 0.5rem;
+
+        mat-icon {
+          font-size: 16px;
+        }
+
+        .value {
+          font-size: 0.75rem;
+          color: #999;
+          margin-left: 0.25rem;
+        }
+      }
+    }
+  }
+
+  .mat-chip {
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+
+  .mat-paginator {
+    margin-top: 2rem;
+    justify-content: center;
+  }
+
+  .mat-icon {
+    vertical-align: middle;
+  }
+
+  .back-button {
+    margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    color: #1e40af;
+
+    mat-icon {
+      font-size: 20px;
+    }
+  }
+}
+
+// Clases de utilidad para texto
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-white { color: white; }
+.line-through { text-decoration: line-through; }
+
+// Clases de espaciado
+.p-3 { padding: 0.75rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.ml-1 { margin-left: 0.25rem; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+
+// Clases de flexbox
+.flex { display: flex; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.flex-col { flex-direction: column; }
+
+// Clases para la cuadrícula
+.grid { display: grid; }
+
+@media (min-width: 640px) {
+  .sm\:flex-row { flex-direction: row; }
+  .sm\:items-center { align-items: center; }
+  .sm\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+// Otras utilidades
+.overflow-hidden { overflow: hidden; }
+.rounded-lg { border-radius: 0.5rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.h-48 { height: 12rem; }
+.h-64 { height: 16rem; }
+.object-cover { object-fit: cover; }
+.border { border: 1px solid; }
+.border-default-200 { border-color: rgba(0, 0, 0, 0.12); }
+.z-10 { z-index: 10; }
+
+mat-card {
+  transition: transform 0.2s ease-in-out;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.text-primary {
+  color: var(--mat-primary-color);
+}
+
+.text-default-400 {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.text-default-500 {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.text-default-600 {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+// Efectos de hover
+.hover\:opacity-100:hover { opacity: 1; }
+.opacity-0 { opacity: 0; }
+.transition-colors { transition-property: background-color, border-color, color, fill, stroke; }
+.duration-300 { transition-duration: 300ms; }
