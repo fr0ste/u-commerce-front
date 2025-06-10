@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatChipsModule } from '@angular/material/chips';
+import { CartService } from '../cart-context/cart.service';
 
 interface Product {
   id: number;
@@ -31,6 +32,8 @@ interface Product {
 })
 export class ProductGridComponent implements OnInit {
   products: Product[] = [];
+
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
     // Inicializar productos de ejemplo
@@ -73,7 +76,12 @@ export class ProductGridComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    // Aquí se implementaría la lógica para añadir al carrito
+    this.cartService.addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image
+    });
     console.log('Añadido al carrito:', product);
   }
 

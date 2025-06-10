@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
+import { CartService } from '../cart-context/cart.service';
 
 interface CheckoutFormData {
   firstName: string;
@@ -98,20 +99,11 @@ export class CheckoutPageComponent {
   
   selectedShipping = 'standard';
   
-  get totalItems(): number {
-    return this.items.reduce((total, item) => total + item.quantity, 0);
-  }
-  
-  get totalPrice(): number {
-    return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
-  }
-  
-  get shippingCost(): number {
-    return this.shippingMethods.find(method => method.id === this.selectedShipping)?.price || 0;
-  }
-  
-  get finalTotal(): number {
-    return this.totalPrice + this.shippingCost;
+  constructor(private cartService: CartService) {
+    // Obtener los items del carrito
+    this.cartService.items$.subscribe(items => {
+      this.items = items;
+    });
   }
   
   handleInputChange<K extends keyof CheckoutFormData>(field: K, value: CheckoutFormData[K]): void {
@@ -141,13 +133,26 @@ export class CheckoutPageComponent {
     setTimeout(() => {
       this.isSubmitting = false;
       this.orderComplete = true;
-      this.clearCart();
+      this.cartService.clearCart();
       window.scrollTo(0, 0);
     }, 1500);
   }
   
-  clearCart(): void {
-    this.items = [];
+  // Los métodos para cálculos pueden ser reemplazados por observables del servicio
+  get totalItems(): number {
+    return this.cartService.totalItems;
+  }
+  
+  get totalPrice(): number {
+    return this.cartService.totalPrice;
+  }
+  
+  get shippingCost(): number {
+    return this.shippingMethods.find(method => method.id === this.selectedShipping)?.price || 0;
+  }
+  
+  get finalTotal(): number {
+    return this.totalPrice + this.shippingCost;
   }
   
   goBack(): void {

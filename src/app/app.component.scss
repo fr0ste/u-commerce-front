@@ -1,0 +1,167 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Navbar styles
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  
+  .container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    align-items: center;
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+    
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+    
+    .brand-name {
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+  }
+  
+  .navbar-menu {
+    display: none;
+    flex: 1;
+    
+    @media (min-width: 768px) {
+      display: flex;
+    }
+    
+    button {
+      height: 64px;
+      border-radius: 0;
+      
+      &.active {
+        background-color: rgba(255, 255, 255, 0.1);
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    
+    .search-input {
+      width: 200px;
+      margin-right: 0.5rem;
+      display: none;
+      
+      @media (min-width: 992px) {
+        display: block;
+      }
+      
+      ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+      
+      ::ng-deep .mat-mdc-text-field-wrapper {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 0 12px;
+      }
+      
+      ::ng-deep .mat-mdc-form-field-infix {
+        padding: 8px 0;
+        min-height: 36px;
+      }
+      
+      input {
+        color: white;
+      }
+      
+      ::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      
+      mat-icon {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+  }
+}
+
+// Main content styles
+.main-content {
+  flex: 1;
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+// Featured products section
+.featured-products {
+  margin: 3rem 0;
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--mat-primary-color);
+      margin: 0;
+    }
+    
+    button {
+      display: flex;
+      align-items: center;
+      
+      mat-icon {
+        margin-left: 0.25rem;
+      }
+    }
+  }
+}
+
+// Under construction page
+.under-construction {
+  padding: 3rem 0;
+  text-align: center;
+  
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--mat-primary-color);
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 1.5rem;
+  }
+  
+  button {
+    mat-icon {
+      margin-right: 0.5rem;
+    }
+  }
+}
+
+// Container utility class
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}

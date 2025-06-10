@@ -7,6 +7,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CartService } from '../cart-context/cart.service';
+import { CartItem } from '../cart-context/cart.model';
 
 interface Product {
   id: number;
@@ -57,7 +59,7 @@ export class CategoryDetailComponent implements OnInit {
     { key: 'priceDesc', label: 'Price: High to Low' }
   ];
 
-  constructor() {}
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
     this.initCategory();
@@ -127,6 +129,15 @@ export class CategoryDetailComponent implements OnInit {
 
   onBackClick(): void {
     this.back.emit();
+  }
+
+  addToCart(product: Product): void {
+    this.cartService.addItem({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image
+    });
   }
 
   getStarArray(rating: number): number[] {

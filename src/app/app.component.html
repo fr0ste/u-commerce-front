@@ -1,3 +1,129 @@
 <router-outlet />
-<app-product-grid> </app-product-grid>
-<!--       [categoryId]="slectedCategoryId" -->
+<div class="app-container">
+  <!-- Barra de navegación -->
+  <mat-toolbar color="primary" class="navbar">
+    <div class="container">
+      <div class="navbar-brand">
+        <mat-icon>shopping_bag</mat-icon>
+        <span class="brand-name">{{ title }}</span>
+      </div>
+      
+      <div class="navbar-menu">
+        <button 
+          mat-button 
+          [class.active]="isHomePage"
+          (click)="navigateTo('home')"
+        >
+          Home
+        </button>
+        <button 
+          mat-button 
+          [class.active]="isShopPage"
+          (click)="navigateTo('shop')"
+        >
+          Shop
+        </button>
+        <button 
+          mat-button 
+          [class.active]="isCategoriesPage"
+          (click)="navigateTo('categories')"
+        >
+          Categories
+        </button>
+        <button 
+          mat-button 
+          [class.active]="isDealsPage"
+          (click)="navigateTo('deals')"
+        >
+          Deals
+        </button>
+      </div>
+      
+      <div class="navbar-actions">
+        <mat-form-field appearance="outline" class="search-input">
+          <input 
+            matInput 
+            placeholder="Search..." 
+            [(ngModel)]="searchQuery"
+            (keyup.enter)="search()"
+          >
+          <mat-icon matPrefix>search</mat-icon>
+        </mat-form-field>
+        
+        <button mat-icon-button>
+          <mat-icon>person</mat-icon>
+        </button>
+        
+        <button mat-icon-button>
+          <mat-icon>favorite</mat-icon>
+        </button>
+        
+        <button mat-icon-button (click)="toggleCart()">
+          <mat-icon 
+            [matBadge]="cartService.totalItems" 
+            matBadgeColor="accent"
+            matBadgeSize="small"
+          >
+            shopping_cart
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <!-- Contenido principal -->
+  <main class="main-content container">
+    <!-- Página principal -->
+    @if (isHomePage) {
+      <app-hero-section></app-hero-section>
+      <app-featured-categories (viewAllClick)="onViewAllCategories()"></app-featured-categories>
+      
+      <section class="featured-products">
+        <div class="section-header">
+          <h2 class="section-title">Featured Products</h2>
+          <button 
+            mat-button 
+            color="primary" 
+            (click)="navigateTo('shop')"
+          >
+            View All
+            <mat-icon>arrow_right</mat-icon>
+          </button>
+        </div>
+        <app-product-grid></app-product-grid>
+      </section>
+    }
+    
+    <!-- Página de categorías -->
+    @if (isCategoriesPage) {
+      <app-categories-page></app-categories-page>
+    }
+    
+    <!-- Página de checkout -->
+    @if (isCheckoutPage) {
+      <app-checkout-page (back)="onCheckoutBack()"></app-checkout-page>
+    }
+    
+    <!-- Páginas en construcción -->
+    @if (isShopPage || isDealsPage) {
+      <div class="under-construction">
+        <h2>{{ currentPage | titlecase }} Page</h2>
+        <p>This page is under construction. Coming soon!</p>
+        <button 
+          mat-raised-button 
+          color="primary"
+          (click)="navigateTo('home')"
+        >
+          <mat-icon>arrow_back</mat-icon>
+          Back to Home
+        </button>
+      </div>
+    }
+  </main>
+
+  <!-- Pie de página -->
+  <app-footer></app-footer>
+
+  <!-- Carrito lateral -->
+  <app-shopping-cart></app-shopping-cart>
+</div>
