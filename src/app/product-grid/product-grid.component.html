@@ -1,0 +1,54 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  @for (product of products; track product.id) {
+    <mat-card class="product-card">
+      <div class="product-image-container">
+        <!-- Badges para productos nuevos o en oferta -->
+        @if (product.isNew) {
+          <mat-chip color="primary" class="new-badge">NEW</mat-chip>
+        }
+        @if (product.isSale) {
+          <mat-chip color="warn" class="sale-badge">SALE</mat-chip>
+        }
+        
+        <img
+          [src]="product.image"
+          [alt]="product.name"
+          class="product-image"
+        />
+        
+        <!-- Overlay con botones de acción -->
+        <div class="product-overlay">
+          <div class="action-buttons">
+            <button mat-mini-fab color="primary" (click)="addToCart(product)">
+              <mat-icon>shopping_cart</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" (click)="addToWishlist(product)">
+              <mat-icon>favorite</mat-icon>
+            </button>
+            <button mat-mini-fab color="primary" (click)="quickView(product)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <mat-card-content class="product-details">
+        <h3 class="product-name">{{product.name}}</h3>
+        <div class="product-price">
+          <span class="current-price">${{product.price.toFixed(2)}}</span>
+          @if (product.originalPrice) {
+            <span class="original-price">${{product.originalPrice.toFixed(2)}}</span>
+          }
+        </div>
+        <div class="product-rating">
+          @for (star of getStarArray(product.rating); track star) {
+            <mat-icon [class.text-warning]="star === 1" [class.text-muted]="star === 0">
+              star
+            </mat-icon>
+          }
+          <span class="rating-value">{{product.rating.toFixed(1)}}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

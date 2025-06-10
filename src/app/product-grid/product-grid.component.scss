@@ -1,0 +1,152 @@
+:host {
+  display: block;
+}
+
+// Grid layout
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+// Product card styling
+.product-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    
+    .product-overlay {
+      opacity: 1;
+    }
+  }
+}
+
+.product-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: 16rem; // h-64
+  object-fit: cover;
+  display: block;
+}
+
+// Badges
+.new-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10;
+}
+
+.sale-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+}
+
+// Overlay with action buttons
+.product-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  
+  button {
+    margin: 0 0.25rem;
+    
+    mat-icon {
+      font-size: 18px;
+      height: 18px;
+      width: 18px;
+    }
+  }
+}
+
+// Product details
+.product-details {
+  padding: 1rem;
+}
+
+.product-name {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--mat-primary-color);
+}
+
+.product-price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  
+  .current-price {
+    font-weight: 600;
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    font-size: 0.875rem;
+    color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  
+  mat-icon {
+    font-size: 14px;
+    height: 14px;
+    width: 14px;
+    
+    &.text-warning {
+      color: #f59e0b; // warning color
+    }
+    
+    &.text-muted {
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .rating-value {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.5);
+    margin-left: 0.25rem;
+  }
+}
+
+// Media queries
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
