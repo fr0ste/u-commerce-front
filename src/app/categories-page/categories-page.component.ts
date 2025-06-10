@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { CategoryDetailComponent } from '../category-detail/category-detail.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,15 +31,14 @@ interface SortOption {
   selector: 'app-categories-page',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
+    FormsModule,
     CategoryDetailComponent,
     MatButtonModule,
     MatIconModule,
     MatChipsModule,
     MatSelectModule,
     MatFormFieldModule
-  ],
+],
   templateUrl: './categories-page.component.html',
   styleUrls: ['./categories-page.component.scss']
 })

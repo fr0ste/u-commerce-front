@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,7 +29,6 @@ interface SortOption {
   selector: 'app-category-detail',
   standalone: true,
   imports: [
-    CommonModule,
     MatButtonModule,
     MatIconModule,
     MatFormFieldModule,
@@ -37,7 +36,7 @@ interface SortOption {
     MatCardModule,
     MatChipsModule,
     MatPaginatorModule
-  ],
+],
   templateUrl: './category-detail.component.html',
   styleUrls: ['./category-detail.component.scss']
 })

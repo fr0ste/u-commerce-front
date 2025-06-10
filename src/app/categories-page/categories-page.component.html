@@ -1,89 +1,89 @@
-<div *ngIf="!selectedCategory; else detailView" class="py-8">
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold mb-2 text-primary">Shop by Categories</h1>
-    <p class="text-default-600 mb-6">Explore our wide range of products across different categories</p>
-    
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-      <div class="flex flex-wrap gap-2">
-        <button mat-flat-button
-          *ngFor="let filter of filters"
-          [color]="selectedFilter === filter.key ? 'primary' : ''"
-          class="rounded-full"
-          (click)="selectedFilter = filter.key"
-        >
-          {{ filter.label }}
-        </button>
-      </div>
-      
-      <mat-form-field appearance="outline">
-        <mat-label>Sort by</mat-label>
-        <mat-select [(ngModel)]="sortOrder">
-          <mat-option *ngFor="let option of sortOptions" [value]="option.key">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
-  
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div
-      *ngFor="let category of filteredCategories"
-      (click)="selectCategory(category.id)"
-      class="cursor-pointer border border-default-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-    >
-      <div class="grid grid-cols-1 sm:grid-cols-2">
-        <div class="relative h-full min-h-[200px]">
-          <img 
-            [src]="category.image" 
-            [alt]="category.title" 
-            class="w-full h-full object-cover"
-          />
-          <div class="absolute top-2 right-2">
-            <mat-chip color="primary">
-              {{ category.itemCount }} items
-            </mat-chip>
-          </div>
-        </div>
-        <div class="p-5">
-          <h3 class="text-xl font-semibold text-primary mb-2">{{ category.title }}</h3>
-          <p class="text-default-600 text-sm mb-4">{{ category.description }}</p>
-          
-          <div class="mb-4">
-            <p class="text-sm font-medium mb-2">Popular subcategories:</p>
-            <div class="flex flex-wrap gap-1">
-              <mat-chip 
-                *ngFor="let subcat of category.subcategories"
-                class="mr-1 mb-1"
-                appearance="outlined"
-                size="small"
+@if (!selectedCategory) {
+  <div class="py-8">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold mb-2 text-primary">Shop by Categories</h1>
+      <p class="text-default-600 mb-6">Explore our wide range of products across different categories</p>
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div class="flex flex-wrap gap-2">
+          @for (filter of filters; track filter) {
+            <button mat-flat-button
+              [color]="selectedFilter === filter.key ? 'primary' : ''"
+              class="rounded-full"
+              (click)="selectedFilter = filter.key"
               >
-                {{ subcat }}
-              </mat-chip>
+              {{ filter.label }}
+            </button>
+          }
+        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Sort by</mat-label>
+          <mat-select [(ngModel)]="sortOrder">
+            @for (option of sortOptions; track option) {
+              <mat-option [value]="option.key">
+                {{ option.label }}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      @for (category of filteredCategories; track category) {
+        <div
+          (click)="selectCategory(category.id)"
+          class="cursor-pointer border border-default-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+          >
+          <div class="grid grid-cols-1 sm:grid-cols-2">
+            <div class="relative h-full min-h-[200px]">
+              <img
+                [src]="category.image"
+                [alt]="category.title"
+                class="w-full h-full object-cover"
+                />
+                <div class="absolute top-2 right-2">
+                  <mat-chip color="primary">
+                    {{ category.itemCount }} items
+                  </mat-chip>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-xl font-semibold text-primary mb-2">{{ category.title }}</h3>
+                <p class="text-default-600 text-sm mb-4">{{ category.description }}</p>
+                <div class="mb-4">
+                  <p class="text-sm font-medium mb-2">Popular subcategories:</p>
+                  <div class="flex flex-wrap gap-1">
+                    @for (subcat of category.subcategories; track subcat) {
+                      <mat-chip
+                        class="mr-1 mb-1"
+                        appearance="outlined"
+                        size="small"
+                        >
+                        {{ subcat }}
+                      </mat-chip>
+                    }
+                  </div>
+                </div>
+                <button mat-button color="primary" class="mt-2">
+                  <span>Explore Category</span>
+                  <mat-icon>arrow_right</mat-icon>
+                </button>
+              </div>
             </div>
           </div>
-          
-          <button mat-button color="primary" class="mt-2">
-            <span>Explore Category</span>
-            <mat-icon>arrow_right</mat-icon>
-          </button>
-        </div>
+        }
+      </div>
+      <div class="mt-10 text-center">
+        <p class="text-default-500 mb-4">Can't find what you're looking for?</p>
+        <button mat-stroked-button color="primary" class="px-4 py-2">
+          <mat-icon>search</mat-icon>
+          Browse All Products
+        </button>
       </div>
     </div>
-  </div>
-  
-  <div class="mt-10 text-center">
-    <p class="text-default-500 mb-4">Can't find what you're looking for?</p>
-    <button mat-stroked-button color="primary" class="px-4 py-2">
-      <mat-icon>search</mat-icon>
-      Browse All Products
-    </button>
-  </div>
-</div>
+  } @else {
+    <app-category-detail
+      [categoryId]="selectedCategory!"
+      (back)="resetCategory()"
+    ></app-category-detail>
+  }
 
-<ng-template #detailView>
-  <app-category-detail 
-    [categoryId]="selectedCategory!" 
-    (back)="resetCategory()"
-  ></app-category-detail>
-</ng-template>
