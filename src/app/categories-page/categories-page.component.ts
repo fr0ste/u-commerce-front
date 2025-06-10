@@ -43,11 +43,7 @@ interface SortOption {
   styleUrls: ['./categories-page.component.scss']
 })
 export class CategoriesPageComponent {
-  selectedFilter: string = 'all';
-  sortOrder: string = 'popular';
-  selectedCategory: number | null = null;
-
-  categories: Category[] = [
+  categories = [
     { 
       id: 1,
       title: "Men's Fashion", 
@@ -114,7 +110,7 @@ export class CategoriesPageComponent {
     }
   ];
 
-  filters: FilterOption[] = [
+  filters = [
     { key: "all", label: "All Categories" },
     { key: "fashion", label: "Fashion" },
     { key: "accessories", label: "Accessories" },
@@ -122,49 +118,54 @@ export class CategoriesPageComponent {
     { key: "electronics", label: "Electronics" },
   ];
 
-  sortOptions: SortOption[] = [
+   sortOptions = [
     { key: "popular", label: "Most Popular" },
     { key: "newest", label: "Newest First" },
     { key: "itemCount", label: "Item Count: High to Low" },
     { key: "alphabetical", label: "Alphabetical (A-Z)" }
   ];
 
-  get filteredCategories(): Category[] {
-    if (this.selectedFilter === 'all') {
-      return this.sortCategories([...this.categories]);
-    } else {
-      const filtered = this.categories.filter(category => {
-        if (this.selectedFilter === "fashion") {
-          return category.title.toLowerCase().includes("fashion") || 
-                 category.title.toLowerCase().includes("collection") ||
-                 category.title.toLowerCase().includes("kids");
-        }
-        return category.title.toLowerCase().includes(this.selectedFilter);
-      });
-      return this.sortCategories(filtered);
-    }
-  }
+  selectedFilter = 'all';
+  sortOrder = 'popular';
+  selectedCategory: number | null = null;
 
-  private sortCategories(categories: Category[]): Category[] {
-    return [...categories].sort((a, b) => {
-      switch (this.sortOrder) {
-        case "itemCount":
-          return b.itemCount - a.itemCount;
-        case "alphabetical":
-          return a.title.localeCompare(b.title);
-        case "newest":
-          return b.id - a.id;
-        default:
-          return 0;
+  get filteredCategories() {
+    if (this.selectedFilter === 'all') {
+      return this.categories;
+    }
+
+    return this.categories.filter(category => {
+      const title = category.title.toLowerCase();
+      if (this.selectedFilter === 'fashion') {
+        return (
+          title.includes('fashion') ||
+          title.includes('collection') ||
+          title.includes('kids')
+        );
       }
+      return title.includes(this.selectedFilter);
     });
   }
 
-  selectCategory(id: number): void {
+  get sortedCategories() {
+    const filtered = [...this.filteredCategories];
+    switch (this.sortOrder) {
+      case 'itemCount':
+        return filtered.sort((a, b) => b.itemCount - a.itemCount);
+      case 'alphabetical':
+        return filtered.sort((a, b) => a.title.localeCompare(b.title));
+      case 'newest':
+        return filtered.sort((a, b) => b.id - a.id); // Simulación de nuevo
+      default:
+        return filtered; // popular (sin cambios)
+    }
+  }
+
+  selectCategory(id: number) {
     this.selectedCategory = id;
   }
 
-  resetCategory(): void {
+  resetCategory() {
     this.selectedCategory = null;
   }
 }

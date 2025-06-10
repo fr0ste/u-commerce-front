@@ -1,51 +1,51 @@
-<router-outlet />
-<div class="app-container">
+<div class="min-h-screen bg-background flex flex-col">
   <!-- Barra de navegación -->
-  <mat-toolbar color="primary" class="navbar">
-    <div class="container">
-      <div class="navbar-brand">
+  <mat-toolbar color="primary" class="sticky top-0 z-10">
+    <div class="container mx-auto px-4 flex items-center justify-between">
+      <div class="flex items-center">
         <mat-icon>shopping_bag</mat-icon>
-        <span class="brand-name">{{ title }}</span>
+        <span class="font-bold text-inherit ml-2">{{ title }}</span>
       </div>
       
-      <div class="navbar-menu">
+      <div class="hidden sm:flex gap-4">
         <button 
           mat-button 
-          [class.active]="isHomePage"
+          [ngClass]="{'opacity-100 font-medium': isHomePage, 'opacity-80': !isHomePage}"
           (click)="navigateTo('home')"
         >
           Home
         </button>
         <button 
           mat-button 
-          [class.active]="isShopPage"
+          [ngClass]="{'opacity-100 font-medium': isShopPage, 'opacity-80': !isShopPage}"
           (click)="navigateTo('shop')"
         >
           Shop
         </button>
         <button 
           mat-button 
-          [class.active]="isCategoriesPage"
+          [ngClass]="{'opacity-100 font-medium': isCategoriesPage, 'opacity-80': !isCategoriesPage}"
           (click)="navigateTo('categories')"
         >
           Categories
         </button>
         <button 
           mat-button 
-          [class.active]="isDealsPage"
+          [ngClass]="{'opacity-100 font-medium': isDealsPage, 'opacity-80': !isDealsPage}"
           (click)="navigateTo('deals')"
         >
           Deals
         </button>
       </div>
       
-      <div class="navbar-actions">
-        <mat-form-field appearance="outline" class="search-input">
+      <div class="flex items-center gap-2">
+        <mat-form-field appearance="outline" class="hidden lg:flex max-w-[15rem] h-10">
           <input 
             matInput 
             placeholder="Search..." 
             [(ngModel)]="searchQuery"
             (keyup.enter)="search()"
+            class="text-sm"
           >
           <mat-icon matPrefix>search</mat-icon>
         </mat-form-field>
@@ -59,66 +59,73 @@
         </button>
         
         <button mat-icon-button (click)="toggleCart()">
-          <mat-icon 
-            [matBadge]="cartService.totalItems" 
-            matBadgeColor="accent"
-            matBadgeSize="small"
-          >
-            shopping_cart
-          </mat-icon>
+          <div class="relative">
+            <mat-icon>shopping_cart</mat-icon>
+            <span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-xs font-bold text-primary">
+              {{ cartService.totalItems }}
+            </span>
+          </div>
         </button>
       </div>
     </div>
   </mat-toolbar>
 
   <!-- Contenido principal -->
-  <main class="main-content container">
-    <!-- Página principal -->
-    @if (isHomePage) {
-      <app-hero-section></app-hero-section>
-      <app-featured-categories (viewAllClick)="onViewAllCategories()"></app-featured-categories>
+  <main class="flex-1">
+    <div class="container mx-auto px-4 py-8">
+      <!-- Página principal -->
+      @if (isHomePage) {
+        <app-hero-section></app-hero-section>
+        <app-featured-categories (viewAllClick)="onViewAllCategories()"></app-featured-categories>
+        
+        <section class="my-12">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold text-primary">Featured Products</h2>
+            <button 
+              mat-button 
+              color="primary" 
+              (click)="navigateTo('shop')"
+              class="flex items-center"
+            >
+              View All
+              <mat-icon>arrow_right</mat-icon>
+            </button>
+          </div>
+          <app-product-grid></app-product-grid>
+        </section>
+      }
       
-      <section class="featured-products">
-        <div class="section-header">
-          <h2 class="section-title">Featured Products</h2>
+      <!-- Página de categorías -->
+      @if (isCategoriesPage) {
+        <app-categories-page></app-categories-page>
+      }
+      
+      <!-- Página de checkout -->
+      @if (isCheckoutPage) {
+        <app-checkout-page (back)="onCheckoutBack()"></app-checkout-page>
+      }
+      
+      <!-- Páginas en construcción -->
+      @if (isShopPage || isDealsPage) {
+        <div class="py-12 text-center">
+          <h2 class="text-2xl font-semibold text-primary mb-4">
+            {{ currentPage | titlecase }} Page
+          </h2>
+          <p class="text-default-600 mb-6">
+            This page is under construction. Coming soon!
+          </p>
           <button 
-            mat-button 
-            color="primary" 
-            (click)="navigateTo('shop')"
+            mat-raised-button 
+            color="primary"
+            (click)="navigateTo('home')"
+            class="flex items-center mx-auto"
           >
-            View All
-            <mat-icon>arrow_right</mat-icon>
+            <mat-icon>arrow_back</mat-icon>
+            Back to Home
           </button>
         </div>
-        <app-product-grid></app-product-grid>
-      </section>
-    }
-    
-    <!-- Página de categorías -->
-    @if (isCategoriesPage) {
-      <app-categories-page></app-categories-page>
-    }
-    
-    <!-- Página de checkout -->
-    @if (isCheckoutPage) {
-      <app-checkout-page (back)="onCheckoutBack()"></app-checkout-page>
-    }
-    
-    <!-- Páginas en construcción -->
-    @if (isShopPage || isDealsPage) {
-      <div class="under-construction">
-        <h2>{{ currentPage | titlecase }} Page</h2>
-        <p>This page is under construction. Coming soon!</p>
-        <button 
-          mat-raised-button 
-          color="primary"
-          (click)="navigateTo('home')"
-        >
-          <mat-icon>arrow_back</mat-icon>
-          Back to Home
-        </button>
-      </div>
-    }
+      }
+    </div>
   </main>
 
   <!-- Pie de página -->

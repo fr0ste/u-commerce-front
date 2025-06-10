@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="bg-primary text-white pt-12 pb-6">
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
       <!-- Logo y redes sociales -->
@@ -7,15 +7,16 @@
           <mat-icon>shopping_bag</mat-icon>
           <span class="font-bold text-xl ml-2">BlueMart</span>
         </div>
-        <p class="text-opacity-80 mb-4">
+        <p class="text-white/80 mb-4">
           Your one-stop destination for quality products at affordable prices.
         </p>
         <div class="flex gap-4">
-          @for (social of socialLinks; track social) {
+          @for (social of socialLinks; track social.icon) {
             <button
               mat-mini-fab
-              class="social-button"
-              [attr.aria-label]="social.icon">
+              size="small"
+              class="bg-white/10 text-white h-9 w-9 min-w-0"
+            >
               <mat-icon>{{social.icon}}</mat-icon>
             </button>
           }
@@ -26,9 +27,9 @@
       <div>
         <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
         <ul class="space-y-2">
-          @for (link of quickLinks; track link) {
+          @for (link of quickLinks; track link.label) {
             <li>
-              <a [routerLink]="link.route" class="footer-link">{{link.label}}</a>
+              <a [routerLink]="link.route" class="text-white/80 hover:text-white">{{link.label}}</a>
             </li>
           }
         </ul>
@@ -38,9 +39,9 @@
       <div>
         <h3 class="font-semibold text-lg mb-4">Customer Service</h3>
         <ul class="space-y-2">
-          @for (link of customerServiceLinks; track link) {
+          @for (link of customerServiceLinks; track link.label) {
             <li>
-              <a [routerLink]="link.route" class="footer-link">{{link.label}}</a>
+              <a [routerLink]="link.route" class="text-white/80 hover:text-white">{{link.label}}</a>
             </li>
           }
         </ul>
@@ -49,12 +50,12 @@
       <!-- Newsletter -->
       <div>
         <h3 class="font-semibold text-lg mb-4">Newsletter</h3>
-        <p class="text-opacity-80 mb-4">
+        <p class="text-white/80 mb-4">
           Subscribe to receive updates, access to exclusive deals, and more.
         </p>
-        <div class="newsletter-form">
-          <mat-form-field appearance="outline" class="email-input">
-            <input matInput placeholder="Enter your email" #emailInput>
+        <div class="flex gap-2">
+          <mat-form-field appearance="outline" class="flex-1 bg-white/10 rounded">
+            <input matInput placeholder="Enter your email" #emailInput class="text-white">
           </mat-form-field>
           <button mat-raised-button color="accent" (click)="subscribeToNewsletter(emailInput.value)">
             Subscribe
@@ -62,22 +63,19 @@
         </div>
       </div>
     </div>
-
-    <mat-divider class="footer-divider"></mat-divider>
-
-    <div class="footer-bottom">
-      <p class="copyright">
+    
+    <mat-divider class="bg-white/20 my-6"></mat-divider>
+    
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <p class="text-white/70 text-sm">
         &copy; {{currentYear}} BlueMart. All rights reserved.
       </p>
-      <div class="footer-bottom-right">
-        <a routerLink="/privacy" class="footer-link small">Privacy Policy</a>
-        <a routerLink="/terms" class="footer-link small">Terms of Service</a>
-        <div class="payment-methods">
-          @for (payment of paymentMethods; track payment) {
-            <img
-              [src]="payment.icon"
-              [alt]="payment.name"
-              class="payment-icon">
+      <div class="flex items-center gap-4 mt-4 md:mt-0">
+        <a routerLink="/privacy" class="text-white/70 text-sm hover:text-white">Privacy Policy</a>
+        <a routerLink="/terms" class="text-white/70 text-sm hover:text-white">Terms of Service</a>
+        <div class="flex items-center gap-2">
+          @for (payment of paymentMethods; track payment.name) {
+            <img [src]="payment.icon" [alt]="payment.name" width="32" height="32">
           }
         </div>
       </div>
