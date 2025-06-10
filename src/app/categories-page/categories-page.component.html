@@ -9,14 +9,14 @@
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <div class="flex flex-wrap gap-2">
           @for (filter of filters; track filter) {
-            <button
-              mat-stroked-button
+            <mat-chip-option
+              [selected]="selectedFilter === filter.key"
               [color]="selectedFilter === filter.key ? 'primary' : undefined"
-              class="rounded-full cursor-pointer"
+              class="cursor-pointer"
               (click)="selectedFilter = filter.key"
             >
               {{ filter.label }}
-            </button>
+            </mat-chip-option>
           }
         </div>
 
@@ -35,7 +35,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       @for (category of sortedCategories; track category) {
-        <div
+        <mat-card
           (click)="selectCategory(category.id)"
           class="cursor-pointer border border-default-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
         >
@@ -61,7 +61,7 @@
                 <p class="text-sm font-medium mb-2">Popular subcategories:</p>
                 <div class="flex flex-wrap gap-1">
                   @for (subcat of category.subcategories; track subcat) {
-                    <mat-chip appearance="outlined" class="mr-1 mb-1" selected>
+                    <mat-chip class="mr-1 mb-1">
                       {{ subcat }}
                     </mat-chip>
                   }
@@ -74,7 +74,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </mat-card>
       }
     </div>
 

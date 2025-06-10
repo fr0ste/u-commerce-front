@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 interface Category {
   id: number;
@@ -37,7 +38,8 @@ interface SortOption {
     MatIconModule,
     MatChipsModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatCardModule
 ],
   templateUrl: './categories-page.component.html',
   styleUrls: ['./categories-page.component.scss']

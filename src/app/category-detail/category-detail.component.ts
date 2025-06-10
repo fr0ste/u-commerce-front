@@ -51,6 +51,7 @@ export class CategoryDetailComponent implements OnInit {
   productsPerPage = 8;
   category: any;
   products: Product[] = [];
+  Math = Math; // Exponer Math para usar en el template
   
   sortOptions: SortOption[] = [
     { key: 'popular', label: 'Most Popular' },
