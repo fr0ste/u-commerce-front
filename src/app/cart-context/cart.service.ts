@@ -113,6 +113,24 @@ export class CartService {
     });
   }
 
+  // Nuevo método específico para cerrar el carrito
+  closeCart(): void {
+    const currentState = this.currentState;
+    this.cartState.next({
+      ...currentState,
+      isOpen: false
+    });
+  }
+
+  // Nuevo método específico para abrir el carrito
+  openCart(): void {
+    const currentState = this.currentState;
+    this.cartState.next({
+      ...currentState,
+      isOpen: true
+    });
+  }
+
   clearCart(): void {
     const currentState = this.currentState;
     this.cartState.next({

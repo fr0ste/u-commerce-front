@@ -37,12 +37,13 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onToggleCart(): void {
-    this.cartService.toggleCart();
+    // Aseguramos que el carrito se cierra correctamente
+    this.cartService.closeCart();
   }
 
   onCheckout(): void {
     // Navegar a checkout
-    this.cartService.toggleCart();
+    this.cartService.closeCart();
     // Aquí debería implementarse la navegación (puede usar Router)
   }
 }

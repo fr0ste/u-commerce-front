@@ -2,9 +2,31 @@
   display: block;
 }
 
+.cart-container-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent;
+  pointer-events: none;
+  z-index: 999;
+}
+
+::ng-deep .mat-drawer-backdrop {
+  position: fixed;
+}
+
+::ng-deep .mat-drawer-container {
+  background: transparent;
+}
+
 .cart-drawer {
+  pointer-events: auto;
   width: 350px;
   max-width: 100%;
+  background-color: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
   
   @media (min-width: 768px) {
     width: 400px;

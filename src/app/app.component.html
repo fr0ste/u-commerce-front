@@ -1,67 +1,58 @@
-<div class="min-h-screen bg-background flex flex-col">
-  <!-- Barra de navegación -->
-  <mat-toolbar color="primary" class="sticky top-0 z-10">
+<mat-sidenav-container class="min-h-screen bg-background flex flex-col">
+  <!-- Navbar -->
+  <mat-toolbar color="primary" class="sticky text-white top-0 z-10">
     <div class="container mx-auto px-4 flex items-center justify-between">
       <div class="flex items-center">
-        <mat-icon>shopping_bag</mat-icon>
-        <span class="font-bold text-inherit ml-2">{{ title }}</span>
+        <mat-icon style="color: white;">shopping_bag</mat-icon>
+        <span class="font-bold text-white text-inherit ml-2">{{ title }}</span>
       </div>
-      
+
       <div class="hidden sm:flex gap-4">
-        <button 
+        <button class="text-white hover:opacity-80 transition-opacity" 
           mat-button 
-          [ngClass]="{'opacity-100 font-medium': isHomePage, 'opacity-80': !isHomePage}"
-          (click)="navigateTo('home')"
-        >
+          [class.font-medium]="isHomePage"
+          (click)="navigateTo('home')" style="color: white;" >
           Home
         </button>
-        <button 
+        <button class="text-white hover:opacity-80 transition-opacity" 
           mat-button 
-          [ngClass]="{'opacity-100 font-medium': isShopPage, 'opacity-80': !isShopPage}"
-          (click)="navigateTo('shop')"
-        >
+          [class.font-medium]="isShopPage"
+          (click)="navigateTo('shop')"  style="color: white;">
           Shop
         </button>
-        <button 
+        <button class="text-white hover:opacity-80 transition-opacity" 
           mat-button 
-          [ngClass]="{'opacity-100 font-medium': isCategoriesPage, 'opacity-80': !isCategoriesPage}"
-          (click)="navigateTo('categories')"
-        >
+          [class.font-medium]="isCategoriesPage"
+          (click)="navigateTo('categories')"  style="color: white;">
           Categories
         </button>
-        <button 
+        <button class="text-white hover:opacity-80 transition-opacity" 
           mat-button 
-          [ngClass]="{'opacity-100 font-medium': isDealsPage, 'opacity-80': !isDealsPage}"
-          (click)="navigateTo('deals')"
-        >
+          [class.font-medium]="isDealsPage"
+          (click)="navigateTo('deals')"  style="color: white;">
           Deals
         </button>
       </div>
-      
+
       <div class="flex items-center gap-2">
-        <mat-form-field appearance="outline" class="hidden lg:flex max-w-[15rem] h-10">
-          <input 
-            matInput 
-            placeholder="Search..." 
-            [(ngModel)]="searchQuery"
-            (keyup.enter)="search()"
-            class="text-sm"
-          >
+        <mat-form-field appearance="outline" class="hidden lg:flex max-w-[15rem] h-10 search-field">
+          <input matInput placeholder="Search..." [(ngModel)]="searchQuery" (keyup.enter)="search()" class="text-sm">
           <mat-icon matPrefix>search</mat-icon>
         </mat-form-field>
-        
-        <button mat-icon-button>
+
+        <button mat-icon-button style="color: white;">
           <mat-icon>person</mat-icon>
         </button>
-        
-        <button mat-icon-button>
+
+        <button mat-icon-button style="color: white;">
           <mat-icon>favorite</mat-icon>
         </button>
-        
-        <button mat-icon-button (click)="toggleCart()">
+
+        <button mat-icon-button (click)="toggleCart()" style="color: white;">
           <div class="relative">
             <mat-icon>shopping_cart</mat-icon>
-            <span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-xs font-bold text-primary">
+            <span *ngIf="cartService.totalItems > 0"
+              class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-xs font-bold text-primary">
               {{ cartService.totalItems }}
             </span>
           </div>
@@ -70,67 +61,57 @@
     </div>
   </mat-toolbar>
 
-  <!-- Contenido principal -->
+  <!-- Main Content -->
   <main class="flex-1">
     <div class="container mx-auto px-4 py-8">
-      <!-- Página principal -->
+      <!-- Home Page -->
       @if (isHomePage) {
-        <app-hero-section></app-hero-section>
-        <app-featured-categories (viewAllClick)="onViewAllCategories()"></app-featured-categories>
-        
-        <section class="my-12">
-          <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-semibold text-primary">Featured Products</h2>
-            <button 
-              mat-button 
-              color="primary" 
-              (click)="navigateTo('shop')"
-              class="flex items-center"
-            >
-              View All
-              <mat-icon>arrow_right</mat-icon>
-            </button>
-          </div>
-          <app-product-grid></app-product-grid>
-        </section>
-      }
-      
-      <!-- Página de categorías -->
-      @if (isCategoriesPage) {
-        <app-categories-page></app-categories-page>
-      }
-      
-      <!-- Página de checkout -->
-      @if (isCheckoutPage) {
-        <app-checkout-page (back)="onCheckoutBack()"></app-checkout-page>
-      }
-      
-      <!-- Páginas en construcción -->
-      @if (isShopPage || isDealsPage) {
-        <div class="py-12 text-center">
-          <h2 class="text-2xl font-semibold text-primary mb-4">
-            {{ currentPage | titlecase }} Page
-          </h2>
-          <p class="text-default-600 mb-6">
-            This page is under construction. Coming soon!
-          </p>
-          <button 
-            mat-raised-button 
-            color="primary"
-            (click)="navigateTo('home')"
-            class="flex items-center mx-auto"
-          >
-            <mat-icon>arrow_back</mat-icon>
-            Back to Home
+      <app-hero-section></app-hero-section>
+      <app-featured-categories (viewAllClick)="onViewAllCategories()"></app-featured-categories>
+
+      <section class="my-12">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-semibold text-primary">Featured Products</h2>
+          <button mat-button color="primary" (click)="navigateTo('shop')" class="flex items-center">
+            View All
+            <mat-icon>arrow_right</mat-icon>
           </button>
         </div>
+        <app-product-grid></app-product-grid>
+      </section>
+      }
+
+      <!-- Categories Page -->
+      @if (isCategoriesPage) {
+      <app-categories-page></app-categories-page>
+      }
+
+      <!-- Checkout Page -->
+      @if (isCheckoutPage) {
+      <app-checkout-page (back)="onCheckoutBack()"></app-checkout-page>
+      }
+
+      <!-- Other Pages (Shop, Deals) -->
+      @if (isShopPage || isDealsPage) {
+      <div class="py-12 text-center">
+        <h2 class="text-2xl font-semibold text-primary mb-4">
+          {{ currentPage | titlecase }} Page
+        </h2>
+        <p class="text-gray-600 mb-6">
+          This page is under construction. Coming soon!
+        </p>
+        <button mat-raised-button color="primary" (click)="navigateTo('home')" class="flex items-center mx-auto">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Home
+        </button>
+      </div>
       }
     </div>
   </main>
 
-  <!-- Pie de página -->
+  <!-- Footer -->
   <app-footer></app-footer>
-
-  <!-- Carrito lateral -->
+  
+  <!-- Shopping Cart (ahora integrado en el sidenav-container) -->
   <app-shopping-cart></app-shopping-cart>
-</div>
+</mat-sidenav-container>

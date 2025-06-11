@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { FormsModule } from '@angular/forms';
 
 import { CategoriesPageComponent } from './categories-page/categories-page.component';
@@ -37,6 +38,7 @@ import { CartService } from "./cart-context/cart.service";
     MatInputModule,
     MatFormFieldModule,
     MatBadgeModule,
+    MatSidenavModule,
     FormsModule
   ],
   templateUrl: './app.component.html',
@@ -51,7 +53,7 @@ export class AppComponent implements OnInit {
   constructor(public cartService: CartService, public router: Router) {}
 
   ngOnInit(): void {
-    // Aquí se podrían inicializar datos o servicios
+    // Initialization if needed
   }
 
   toggleCart(): void {
@@ -82,7 +84,7 @@ export class AppComponent implements OnInit {
 
   search(): void {
     console.log('Searching for:', this.searchQuery);
-    // Implementar búsqueda real
+    // Implement search functionality
   }
 
   get isHomePage(): boolean {
