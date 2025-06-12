@@ -69,47 +69,47 @@
                 <h2 class="text-xl font-semibold mb-4">Información de envío</h2>
                 <form (ngSubmit)="submitShipping()">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                       <mat-label>Nombre</mat-label>
                       <input matInput [(ngModel)]="formData.firstName" name="firstName" required placeholder="Introduce tu nombre">
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                       <mat-label>Apellidos</mat-label>
                       <input matInput [(ngModel)]="formData.lastName" name="lastName" required placeholder="Introduce tus apellidos">
                     </mat-form-field>
                   </div>
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                       <mat-label>Email</mat-label>
                       <input matInput [(ngModel)]="formData.email" name="email" required type="email" placeholder="Introduce tu email">
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                       <mat-label>Teléfono</mat-label>
                       <input matInput [(ngModel)]="formData.phone" name="phone" required type="tel" placeholder="Introduce tu número de teléfono">
                     </mat-form-field>
                   </div>
                   <div class="mb-4">
-                    <mat-form-field appearance="outline" class="w-full">
+                    <mat-form-field appearance="fill" class="w-full">
                       <mat-label>Dirección</mat-label>
                       <input matInput [(ngModel)]="formData.address" name="address" required placeholder="Introduce tu dirección">
                     </mat-form-field>
                   </div>
                   <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <mat-form-field appearance="outline" class="col-span-2">
+                    <mat-form-field appearance="fill" class="col-span-2">
                       <mat-label>Ciudad</mat-label>
                       <input matInput [(ngModel)]="formData.city" name="city" required placeholder="Ciudad">
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                       <mat-label>Provincia</mat-label>
                       <input matInput [(ngModel)]="formData.state" name="state" required placeholder="Provincia">
                     </mat-form-field>
-                    <mat-form-field appearance="outline">
+                    <mat-form-field appearance="fill">
                       <mat-label>Código Postal</mat-label>
                       <input matInput [(ngModel)]="formData.zipCode" name="zipCode" required placeholder="Código Postal">
                     </mat-form-field>
                   </div>
                   <div class="mb-6">
-                    <mat-form-field appearance="outline" class="w-full">
+                    <mat-form-field appearance="fill" class="w-full">
                       <mat-label>País</mat-label>
                       <mat-select [(ngModel)]="formData.country" name="country" required>
                         <mat-option value="ESP">España</mat-option>
@@ -183,22 +183,22 @@
                   </mat-radio-group>
                   @if (formData.paymentMethod === 'credit') {
                     <div class="space-y-4 mb-6">
-                      <mat-form-field appearance="outline" class="w-full">
+                      <mat-form-field appearance="fill" class="w-full">
                         <mat-label>Número de tarjeta</mat-label>
                         <input matInput placeholder="1234 5678 9012 3456" required>
                         <mat-icon matPrefix>credit_card</mat-icon>
                       </mat-form-field>
                       <div class="grid grid-cols-2 gap-4">
-                        <mat-form-field appearance="outline">
+                        <mat-form-field appearance="fill">
                           <mat-label>Fecha de caducidad</mat-label>
                           <input matInput placeholder="MM/AA" required>
                         </mat-form-field>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field appearance="fill">
                           <mat-label>Código de seguridad (CVV)</mat-label>
                           <input matInput placeholder="123" type="password" required>
                         </mat-form-field>
                       </div>
-                      <mat-form-field appearance="outline" class="w-full">
+                      <mat-form-field appearance="fill" class="w-full">
                         <mat-label>Nombre en la tarjeta</mat-label>
                         <input matInput placeholder="Nombre completo como aparece en la tarjeta" required>
                       </mat-form-field>
