@@ -8,36 +8,28 @@
       </div>
 
       <div class="hidden sm:flex gap-4">
-        <button class="text-white hover:opacity-80 transition-opacity" 
-          mat-button 
-          [class.font-medium]="isHomePage"
-          (click)="navigateTo('home')" style="color: white;" >
+        <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isHomePage"
+          (click)="navigateTo('home')" style="color: white;">
           Home
         </button>
-        <button class="text-white hover:opacity-80 transition-opacity" 
-          mat-button 
-          [class.font-medium]="isShopPage"
-          (click)="navigateTo('shop')"  style="color: white;">
+        <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isShopPage"
+          (click)="navigateTo('shop')" style="color: white;">
           Shop
         </button>
-        <button class="text-white hover:opacity-80 transition-opacity" 
-          mat-button 
-          [class.font-medium]="isCategoriesPage"
-          (click)="navigateTo('categories')"  style="color: white;">
+        <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isCategoriesPage"
+          (click)="navigateTo('categories')" style="color: white;">
           Categories
         </button>
-        <button class="text-white hover:opacity-80 transition-opacity" 
-          mat-button 
-          [class.font-medium]="isDealsPage"
-          (click)="navigateTo('deals')"  style="color: white;">
+        <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isDealsPage"
+          (click)="navigateTo('deals')" style="color: white;">
           Deals
         </button>
       </div>
 
       <div class="flex items-center gap-2">
         <mat-form-field appearance="outline" class="hidden lg:flex max-w-[15rem] h-10 search-field">
-          <input matInput placeholder="Search..." [(ngModel)]="searchQuery" (keyup.enter)="search()" class="text-sm">
           <mat-icon matPrefix>search</mat-icon>
+          <input matInput [(ngModel)]="searchQuery" (keyup.enter)="search()" class="text-sm" />
         </mat-form-field>
 
         <button mat-icon-button (click)="navigateTo('login')" style="color: white;">
@@ -93,7 +85,7 @@
 
       <!-- Login Page -->
       @if (isLoginPage) {
-        <app-login></app-login>
+      <app-login></app-login>
       }
 
       <!-- Other Pages (Shop, Deals) -->
@@ -116,7 +108,7 @@
 
   <!-- Footer -->
   <app-footer></app-footer>
-  
+
   <!-- Shopping Cart (ahora integrado en el sidenav-container) -->
   <app-shopping-cart></app-shopping-cart>
 </mat-sidenav-container>
