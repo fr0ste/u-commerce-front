@@ -6,6 +6,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatBadgeModule } from '@angular/material/badge';
 import { CartService } from '../cart-context/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -22,7 +23,10 @@ import { CartService } from '../cart-context/cart.service';
   styleUrls: ['./shopping-cart.component.scss']
 })
 export class ShoppingCartComponent implements OnInit {
-  constructor(public cartService: CartService) {}
+  constructor(
+    public cartService: CartService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // No es necesario suscribirse manualmente si usamos el pipe async en la plantilla
@@ -42,8 +46,15 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onCheckout(): void {
-    // Navegar a checkout
+    // Cerramos el carrito
     this.cartService.closeCart();
-    // Aquí debería implementarse la navegación (puede usar Router)
+    
+    // Emitimos un evento para el componente principal
+    // o navegamos a la página de checkout
+    // Si estás usando el Router de Angular:
+    // this.router.navigate(['/checkout']);
+    
+    // Si estás usando una estrategia de páginas como en tu app.component:
+    window.dispatchEvent(new CustomEvent('navigate-to-checkout'));
   }
 }

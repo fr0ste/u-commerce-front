@@ -18,6 +18,7 @@ import { HeroSectionComponent } from "./hero-section/hero-section.component";
 import { ProductGridComponent } from "./product-grid/product-grid.component";
 import { ShoppingCartComponent } from "./shopping-cart/shopping-cart.component";
 import { CartService } from "./cart-context/cart.service";
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ import { CartService } from "./cart-context/cart.service";
     CheckoutPageComponent, 
     FeaturedCategoriesComponent, 
     FooterComponent, 
+    LoginComponent,
     HeroSectionComponent, 
     ProductGridComponent, 
     ShoppingCartComponent,
@@ -46,22 +48,25 @@ import { CartService } from "./cart-context/cart.service";
 })
 export class AppComponent implements OnInit {
   title = 'BlueMart';
-  currentPage: 'home' | 'shop' | 'categories' | 'deals' | 'checkout' = 'home';
+  currentPage: 'home' | 'shop' | 'categories' | 'deals' | 'checkout' | 'login' = 'home';
   selectedCategoryId: number | null = null;
   searchQuery = '';
 
   constructor(public cartService: CartService, public router: Router) {}
 
   ngOnInit(): void {
-    // Initialization if needed
+    // Escuchar el evento personalizado para navegar al checkout
+    window.addEventListener('navigate-to-checkout', () => {
+      this.navigateTo('checkout');
+    });
   }
 
   toggleCart(): void {
     this.cartService.toggleCart();
   }
 
-  navigateTo(page: 'home' | 'shop' | 'categories' | 'deals' | 'checkout'): void {
-    this.currentPage = page;
+  navigateTo(page: 'home' | 'shop' | 'categories' | 'deals' | 'checkout' | 'login'): void {
+    this.currentPage = page as any;
     this.selectedCategoryId = null;
     window.scrollTo(0, 0);
   }
@@ -105,5 +110,9 @@ export class AppComponent implements OnInit {
 
   get isCheckoutPage(): boolean {
     return this.currentPage === 'checkout';
+  }
+
+  get isLoginPage(): boolean {
+    return this.currentPage === 'login';
   }
 }

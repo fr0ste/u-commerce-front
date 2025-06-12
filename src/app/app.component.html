@@ -40,7 +40,7 @@
           <mat-icon matPrefix>search</mat-icon>
         </mat-form-field>
 
-        <button mat-icon-button style="color: white;">
+        <button mat-icon-button (click)="navigateTo('login')" style="color: white;">
           <mat-icon>person</mat-icon>
         </button>
 
@@ -89,6 +89,11 @@
       <!-- Checkout Page -->
       @if (isCheckoutPage) {
       <app-checkout-page (back)="onCheckoutBack()"></app-checkout-page>
+      }
+
+      <!-- Login Page -->
+      @if (isLoginPage) {
+        <app-login></app-login>
       }
 
       <!-- Other Pages (Shop, Deals) -->
