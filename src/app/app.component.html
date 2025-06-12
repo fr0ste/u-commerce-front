@@ -7,6 +7,16 @@
         <span class="font-bold text-white text-inherit ml-2">{{ title }}</span>
       </div>
 
+      <!-- Menú simplificado para la página de login -->
+      @if (isLoginPage) {
+      <div class="flex items-center">
+        <button class="text-white hover:opacity-80 transition-opacity" mat-button
+          (click)="navigateTo('home')" style="color: white;">
+          Home
+        </button>
+      </div>
+      } @else {
+      <!-- Menú normal para el resto de páginas -->
       <div class="hidden sm:flex gap-4">
         <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isHomePage"
           (click)="navigateTo('home')" style="color: white;">
@@ -50,6 +60,7 @@
           </div>
         </button>
       </div>
+      }
     </div>
   </mat-toolbar>
 
