@@ -1,0 +1,84 @@
+<footer class="bg-primary text-white pt-12 pb-6">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <!-- Logo y redes sociales -->
+      <div>
+        <div class="flex items-center mb-4">
+          <mat-icon>shopping_bag</mat-icon>
+          <span class="font-bold text-xl ml-2">BlueMart</span>
+        </div>
+        <p class="text-white/80 mb-4">
+          Your one-stop destination for quality products at affordable prices.
+        </p>
+        <div class="flex gap-4">
+          @for (social of socialLinks; track social.icon) {
+            <button
+              mat-mini-fab
+              size="small"
+              class="bg-white/10 text-white h-9 w-9 min-w-0"
+            >
+              <mat-icon>{{social.icon}}</mat-icon>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Enlaces rápidos -->
+      <div>
+        <h3 class="font-semibold text-lg mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          @for (link of quickLinks; track link.label) {
+            <li>
+              <a [routerLink]="link.route" class="text-white/80 hover:text-white">{{link.label}}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Servicio al cliente -->
+      <div>
+        <h3 class="font-semibold text-lg mb-4">Customer Service</h3>
+        <ul class="space-y-2">
+          @for (link of customerServiceLinks; track link.label) {
+            <li>
+              <a [routerLink]="link.route" class="text-white/80 hover:text-white">{{link.label}}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div>
+        <h3 class="font-semibold text-lg mb-4">Newsletter</h3>
+        <p class="text-white/80 mb-4">
+          Subscribe to receive updates, access to exclusive deals, and more.
+        </p>
+        <div class="flex gap-2">
+          <mat-form-field appearance="fill" class=" bg-white/10 rounded">
+            <input matInput placeholder="Enter your email" #emailInput class="text-white">
+          </mat-form-field>
+          <button mat-raised-button color="accent" (click)="subscribeToNewsletter(emailInput.value)">
+            Subscribe
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <mat-divider class="bg-white/20 my-6"></mat-divider>
+    
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <p class="text-white text-sm">
+        &copy; {{currentYear}} BlueMart. All rights reserved.
+      </p>
+      <div class="flex items-center gap-4 mt-4 md:mt-0">
+        <a routerLink="/privacy" class="text-white/70 text-sm hover:text-white">Privacy Policy</a>
+        <a routerLink="/terms" class="text-white/70 text-sm hover:text-white">Terms of Service</a>
+        <div class="flex items-center gap-2">
+          @for (payment of paymentMethods; track payment.name) {
+            <img [src]="payment.icon" [alt]="payment.name" width="32" height="32">
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

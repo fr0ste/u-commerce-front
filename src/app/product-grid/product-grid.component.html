@@ -1,0 +1,70 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  @for (product of products; track product.id) {
+    <mat-card class="border border-default-200">
+      <div class="relative p-0 overflow-hidden">
+        @if (product.isNew) {
+          <mat-chip color="primary" class="absolute top-2 left-2 z-10 m-2">NEW</mat-chip>
+        }
+        @if (product.isSale) {
+          <mat-chip color="warn" class="absolute top-2 right-2 z-10 m-2">SALE</mat-chip>
+        }
+
+        <img
+          [src]="product.image"
+          [alt]="product.name"
+          class="w-full h-64 object-cover"
+          />
+
+          <div class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
+            <div class="flex gap-2">
+              <button
+                mat-mini-fab
+                color="primary"
+                class="rounded-full"
+                (click)="addToCart(product)"
+                >
+                <mat-icon>shopping_cart</mat-icon>
+              </button>
+              <button
+                mat-mini-fab
+                color="primary"
+                class="rounded-full"
+                (click)="addToWishlist(product)"
+                >
+                <mat-icon>favorite</mat-icon>
+              </button>
+              <button
+                mat-mini-fab
+                color="primary"
+                class="rounded-full"
+                (click)="quickView(product)"
+                >
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <mat-card-content class="flex flex-col items-start text-left p-4">
+          <h3 class="font-medium text-primary">{{product.name}}</h3>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="font-semibold">${{product.price.toFixed(2)}}</span>
+            @if (product.originalPrice) {
+              <span class="text-default-400 line-through text-sm">${{product.originalPrice.toFixed(2)}}</span>
+            }
+          </div>
+          <div class="mt-2 flex items-center">
+            @for (star of getStarArray(product.rating); track star) {
+              @if (star === 1) {
+                <mat-icon class="text-warning h-[14px] w-[14px] text-[14px]">star</mat-icon>
+              }
+              @if (star === 0) {
+                <mat-icon class="text-default-300 h-[14px] w-[14px] text-[14px]">star</mat-icon>
+              }
+            }
+            <span class="text-xs text-default-500 ml-1">{{product.rating.toFixed(1)}}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>

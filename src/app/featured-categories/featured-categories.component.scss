@@ -1,0 +1,134 @@
+:host {
+  display: block;
+}
+
+// Utilidades básicas
+.my-12 {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-primary {
+  color: var(--mat-primary-color);
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-white {
+  color: white;
+}
+
+// Flex y grid
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+// Tarjeta de categoría
+.category-card {
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-5px);
+    
+    .category-image {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.category-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.category-image {
+  width: 100%;
+  height: 12rem; // h-48
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.category-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(var(--mat-primary-rgb), 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  color: white;
+}
+
+.opacity-90 {
+  opacity: 0.9;
+}
+
+// Botón personalizado
+.view-all-button {
+  display: flex;
+  align-items: center;
+  
+  mat-icon {
+    margin-left: 4px;
+  }
+}
