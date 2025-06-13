@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatStepperModule } from '@angular/material/stepper';
 import { CartService } from '../cart-context/cart.service';
+import { Router } from '@angular/router';
 
 interface CheckoutFormData {
   firstName: string;
@@ -99,7 +100,7 @@ export class CheckoutPageComponent {
   
   selectedShipping = 'standard';
   
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService, private router: Router) {
     // Obtener los items del carrito
     this.cartService.items$.subscribe(items => {
       this.items = items;
@@ -156,7 +157,8 @@ export class CheckoutPageComponent {
   }
   
   goBack(): void {
-    this.back.emit();
+    // En lugar de emitir un evento, usamos el router para navegar
+    this.router.navigate(['/home']);
   }
   
   getRandomOrderNumber(): string {

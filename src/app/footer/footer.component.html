@@ -54,11 +54,17 @@
           Subscribe to receive updates, access to exclusive deals, and more.
         </p>
         <div class="flex gap-2">
-          <mat-form-field appearance="fill" class=" bg-white/10 rounded">
-            <input matInput placeholder="Enter your email" #emailInput class="text-white">
+          <mat-form-field appearance="fill" class="bg-white/10 rounded">
+            <input matInput placeholder="Enter your email" #emailInput class="text-white" type="email">
+            <mat-error>Please enter a valid email</mat-error>
           </mat-form-field>
-          <button mat-raised-button color="accent" (click)="subscribeToNewsletter(emailInput.value)">
-            Subscribe
+          <button 
+            mat-raised-button 
+            color="accent" 
+            (click)="subscribeToNewsletter(emailInput.value)"
+            [disabled]="isSubscribing">
+            <mat-icon *ngIf="isSubscribing" class="spinner">refresh</mat-icon>
+            <span *ngIf="!isSubscribing">Subscribe</span>
           </button>
         </div>
       </div>

@@ -49,12 +49,8 @@ export class ShoppingCartComponent implements OnInit {
     // Cerramos el carrito
     this.cartService.closeCart();
     
-    // Emitimos un evento para el componente principal
-    // o navegamos a la página de checkout
-    // Si estás usando el Router de Angular:
-    // this.router.navigate(['/checkout']);
-    
-    // Si estás usando una estrategia de páginas como en tu app.component:
-    window.dispatchEvent(new CustomEvent('navigate-to-checkout'));
+    // Usar el router para navegar a la página de checkout
+    this.router.navigate(['/checkout-page']);
   }
 }
+    

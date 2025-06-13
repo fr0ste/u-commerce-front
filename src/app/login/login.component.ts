@@ -8,11 +8,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
+  imports: [RouterModule,
     CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -20,7 +26,9 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    HttpClientModule,
+    MatSnackBarModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -32,7 +40,9 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,17 +57,29 @@ export class LoginComponent {
     }
     
     this.isLoading = true;
-    const { email, password, rememberMe } = this.loginForm.value;
+    const { email, password } = this.loginForm.value;
     
-    // Simulando una llamada a API
-    setTimeout(() => {
-      console.log('Login attempt:', { email, password, rememberMe });
-      this.isLoading = false;
-      
-      // Aquí normalmente redireccionar tras un login exitoso
-      this.router.navigate(['/']);
-      
-      // O mostrar un mensaje de error si falla
-    }, 1500);
+    const loginRequest = {
+      email,
+      password
+    };
+
+    this.authService.login(loginRequest).subscribe({
+      next: (response) => {
+        console.log('Login successful:', response);
+        this.isLoading = false;
+        // Redireccionar al home
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Login error:', error);
+        this.isLoading = false;
+        
+        // Mostrar mensaje de error
+        this.snackBar.open('Error al iniciar sesión. Verifica tus credenciales.', 'Cerrar', {
+          duration: 5000
+        });
+      }
+    });
   }
 }

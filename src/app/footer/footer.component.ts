@@ -5,6 +5,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { NewsletterService } from '../services/newsletter.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
@@ -15,13 +20,18 @@ import { MatDividerModule } from '@angular/material/divider';
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    MatSnackBarModule,
+    HttpClientModule,
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
   currentYear = new Date().getFullYear();
+  isSubscribing = false;
   
   // Enlaces rápidos para la navegación
   quickLinks = [
@@ -56,8 +66,41 @@ export class FooterComponent {
     { name: 'PayPal', icon: 'assets/icons/paypal.svg' }
   ];
   
+  constructor(
+    private newsletterService: NewsletterService,
+    private snackBar: MatSnackBar
+  ) {}
+  
   subscribeToNewsletter(email: string): void {
-    // Implementación para suscribirse al newsletter
-    console.log('Suscrito con email:', email);
+    if (!email || !this.validateEmail(email)) {
+      this.snackBar.open('Por favor, introduce un email válido', 'Cerrar', {
+        duration: 3000
+      });
+      return;
+    }
+    
+    this.isSubscribing = true;
+    
+    this.newsletterService.subscribe(email).subscribe({
+      next: (response) => {
+        console.log('Suscripción exitosa:', response);
+        this.isSubscribing = false;
+        this.snackBar.open('¡Gracias por suscribirte a nuestro newsletter!', 'Cerrar', {
+          duration: 5000
+        });
+      },
+      error: (error) => {
+        console.error('Error en la suscripción:', error);
+        this.isSubscribing = false;
+        this.snackBar.open('Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.', 'Cerrar', {
+          duration: 5000
+        });
+      }
+    });
+  }
+  
+  private validateEmail(email: string): boolean {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
   }
 }

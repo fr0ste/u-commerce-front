@@ -13,9 +13,9 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <mat-form-field appearance="fill" class="w-full">
           <mat-label>Nombre</mat-label>
-          <input matInput formControlName="firstName" placeholder="Tu nombre">
+          <input matInput formControlName="name" placeholder="Tu nombre">
           <mat-icon matPrefix>person</mat-icon>
-          @if (registerForm.get('firstName')?.hasError('required')) {
+          @if (registerForm.get('name')?.hasError('required')) {
             <mat-error>
               El nombre es obligatorio
             </mat-error>
@@ -23,14 +23,28 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="w-full">
-          <mat-label>Apellidos</mat-label>
-          <input matInput formControlName="lastName" placeholder="Tus apellidos">
+          <mat-label>Segundo nombre</mat-label>
+          <input matInput formControlName="middleName" placeholder="Tu segundo nombre">
           <mat-icon matPrefix>person</mat-icon>
-          @if (registerForm.get('lastName')?.hasError('required')) {
+        </mat-form-field>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Nombre de usuario</mat-label>
+          <input matInput formControlName="username" placeholder="Usuario">
+          <mat-icon matPrefix>account_circle</mat-icon>
+          @if (registerForm.get('username')?.hasError('required')) {
             <mat-error>
-              Los apellidos son obligatorios
+              El nombre de usuario es obligatorio
             </mat-error>
           }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Apodo</mat-label>
+          <input matInput formControlName="nickname" placeholder="Apodo (opcional)">
+          <mat-icon matPrefix>face</mat-icon>
         </mat-form-field>
       </div>
 
@@ -46,6 +60,28 @@
         @if (registerForm.get('email')?.hasError('email')) {
           <mat-error>
             Por favor, introduce un correo electrónico válido
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phoneNumber" placeholder="Número de teléfono">
+        <mat-icon matPrefix>phone</mat-icon>
+        @if (registerForm.get('phoneNumber')?.hasError('required')) {
+          <mat-error>
+            El teléfono es obligatorio
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="address" placeholder="Tu dirección">
+        <mat-icon matPrefix>home</mat-icon>
+        @if (registerForm.get('address')?.hasError('required')) {
+          <mat-error>
+            La dirección es obligatoria
           </mat-error>
         }
       </mat-form-field>
@@ -129,7 +165,7 @@
       </div>
 
       <div class="login-link">
-        ¿Ya tienes una cuenta? <a href="#" (click)="navigateToLogin($event)">Iniciar sesión</a>
+        ¿Ya tienes una cuenta? <a routerLink="/login">Iniciar sesión</a>
       </div>
     </form>
   </div>
