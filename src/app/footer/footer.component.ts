@@ -81,6 +81,7 @@ export class FooterComponent {
     
     this.isSubscribing = true;
     
+    // Usar el servicio actualizado para suscribir el email
     this.newsletterService.subscribe(email).subscribe({
       next: (response) => {
         console.log('Suscripción exitosa:', response);

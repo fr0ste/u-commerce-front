@@ -22,6 +22,7 @@ import { ShoppingCartComponent } from "./shopping-cart/shopping-cart.component";
 import { CartService } from "./cart-context/cart.service";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -60,7 +61,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     public cartService: CartService,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) {
     // Detectar cambios en la ruta para actualizar el estado
     this.router.events.pipe(
@@ -143,5 +145,10 @@ export class AppComponent implements OnInit {
   isAuthPage(): boolean {
     const url = this.router.url;
     return url.includes('/login') || url.includes('/register');
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

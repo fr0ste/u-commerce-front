@@ -10,7 +10,7 @@ export class UriConstants {
   public static readonly HOST = host;
   public static readonly USER_LOGIN = basePath + '/auth/login';
   public static readonly USER_REGISTER = basePath + '/auth/register';
-  public static readonly EMAIL_REGISTER = basePath + '/newsletter/suscribe';
+  public static readonly EMAIL_REGISTER = basePath + '/newsletter/subscribe';
 
 }
 
