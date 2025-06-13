@@ -7,7 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +23,10 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    RouterModule,
+    HttpClientModule,
+    MatSnackBarModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -33,12 +39,18 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {
     this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      name: ['', Validators.required],
+      middleName: [''],
+      username: ['', Validators.required],
+      nickname: [''],
       email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', Validators.required],
+      address: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
       acceptTerms: [false, Validators.requiredTrue]
@@ -67,23 +79,42 @@ export class RegisterComponent {
     this.isLoading = true;
     const formData = this.registerForm.value;
     
-    // Simulando una llamada a API
-    setTimeout(() => {
-      console.log('Registration data:', formData);
-      this.isLoading = false;
-      
-      // Aquí normalmente redireccionar tras un registro exitoso
-      this.router.navigate(['/']);
-      
-      // O mostrar un mensaje de éxito
-    }, 1500);
-  }
-
-  navigateToLogin(event: Event): void {
-    event.preventDefault();
-    // Aquí puedes usar el enrutador de Angular para navegar a la página de login
-    // Simulando una navegación a la página de login
-    console.log('Navigating to login page');
-    this.router.navigate(['/login']);
+    // Preparar el objeto de registro según el formato requerido por la API
+    const registerRequest = {
+      email: formData.email,
+      password: formData.password,
+      name: formData.name,
+      middleName: formData.middleName,
+      nickname: formData.nickname,
+      phoneNumber: formData.phoneNumber,
+      address: formData.address,
+      username: formData.username
+    };
+    
+    this.authService.register(registerRequest).subscribe({
+      next: (response) => {
+        console.log('Registration successful:', response);
+        this.isLoading = false;
+        
+        // Mostrar mensaje de éxito
+        this.snackBar.open(response.message || 'Registro exitoso. Por favor, confirma tu correo electrónico.', 'Cerrar', {
+          duration: 5000
+        });
+        
+        // Redireccionar a la página de login
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000);
+      },
+      error: (error) => {
+        console.error('Registration error:', error);
+        this.isLoading = false;
+        
+        // Mostrar mensaje de error
+        this.snackBar.open('Error en el registro. Por favor, inténtalo de nuevo.', 'Cerrar', {
+          duration: 5000
+        });
+      }
+    });
   }
 }

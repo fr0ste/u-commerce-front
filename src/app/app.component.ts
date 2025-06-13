@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,6 +9,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { filter } from 'rxjs/operators';
 
 import { CategoriesPageComponent } from './categories-page/categories-page.component';
 import { CheckoutPageComponent } from "./checkout-page/checkout-page.component";
@@ -43,7 +45,9 @@ import { RegisterComponent } from './register/register.component';
     MatFormFieldModule,
     MatBadgeModule,
     MatSidenavModule,
-    FormsModule
+    FormsModule,
+    MatTooltipModule,
+    RouterModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -54,7 +58,17 @@ export class AppComponent implements OnInit {
   selectedCategoryId: number | null = null;
   searchQuery = '';
 
-  constructor(public cartService: CartService, public router: Router) {}
+  constructor(
+    public cartService: CartService,
+    private router: Router
+  ) {
+    // Detectar cambios en la ruta para actualizar el estado
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      // La navegación ya se manejará por el router
+    });
+  }
 
   ngOnInit(): void {
     // Escuchar el evento personalizado para navegar al checkout
@@ -90,8 +104,12 @@ export class AppComponent implements OnInit {
   }
 
   search(): void {
-    console.log('Searching for:', this.searchQuery);
-    // Implement search functionality
+    if (this.searchQuery.trim()) {
+      console.log('Searching for:', this.searchQuery);
+      // Aquí podrías navegar a una página de resultados de búsqueda
+      this.router.navigate(['/shop'], { queryParams: { q: this.searchQuery } });
+      this.searchQuery = '';
+    }
   }
 
   get isHomePage(): boolean {
@@ -122,7 +140,8 @@ export class AppComponent implements OnInit {
     return this.currentPage === 'register';
   }
 
-  get isAuthPage(): boolean {
-    return this.isLoginPage || this.isRegisterPage;
+  isAuthPage(): boolean {
+    const url = this.router.url;
+    return url.includes('/login') || url.includes('/register');
   }
 }
