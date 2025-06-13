@@ -1,0 +1,118 @@
+<div class="py-8">
+  <!-- Botón de regreso -->
+  <button mat-flat-button color="primary" variant="flat" class="mb-6" (click)="onBackClick()">
+    <mat-icon>arrow_back</mat-icon>
+    Back to Categories
+  </button>
+
+  <!-- Banner de categoría -->
+  <div class="relative rounded-lg overflow-hidden mb-8 h-48 md:h-64">
+    <img
+      [src]="category.banner"
+      [alt]="category.title"
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/20 flex items-center">
+      <div class="px-6 md:px-10">
+        <h1 class="text-2xl md:text-4xl font-bold text-white mb-2">{{ category.title }}</h1>
+        <p class="text-white/90 max-w-md">{{ category.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+    <div>
+      <p class="text-default-600">
+        Showing {{ currentProducts.length }} of {{ products.length }} products
+      </p>
+    </div>
+    
+    <mat-form-field appearance="outline" class="min-w-[200px]">
+      <mat-label>Sort by</mat-label>
+      <mat-select [value]="sortOrder" (selectionChange)="setSortOrder($event.value)">
+        @for (option of sortOptions; track option) {
+          <mat-option [value]="option.key">
+            {{ option.label }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Productos -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    @for (product of currentProducts; track product) {
+      <mat-card class="border border-default-200 rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-shadow">
+        <div class="relative">
+          @if (product.isNew) {
+            <mat-chip color="primary" class="absolute top-2 left-2 z-10">NEW</mat-chip>
+          }
+          @if (product.isSale) {
+            <mat-chip color="warn" class="absolute top-2 right-2 z-10">SALE</mat-chip>
+          }
+
+          <img
+            [src]="product.image"
+            [alt]="product.name"
+            class="w-full h-64 object-cover"
+          />
+
+          <!-- Hover overlay -->
+          <div class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center opacity-0 hover:opacity-100">
+            <div class="flex gap-2">
+              <button mat-mini-fab color="primary" (click)="addToCart(product)">
+                <mat-icon>shopping_cart</mat-icon>
+              </button>
+              <button mat-mini-fab color="primary">
+                <mat-icon>favorite</mat-icon>
+              </button>
+              <button mat-mini-fab color="primary">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contenido del producto -->
+        <mat-card-content class="p-3">
+          <h3 class="font-medium text-primary">{{ product.name }}</h3>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="font-semibold">${{ product.price.toFixed(2) }}</span>
+            @if (product.originalPrice) {
+              <span class="text-default-400 line-through text-sm">
+                ${{ product.originalPrice.toFixed(2) }}
+              </span>
+            }
+          </div>
+
+          <!-- Rating -->
+          <div class="mt-2 flex items-center gap-1">
+            @for (star of [1, 2, 3, 4, 5]; track star) {
+              <mat-icon 
+                [class]="star <= Math.floor(product.rating) ? 'text-warning' : 'text-default-300'"
+                class="text-sm"
+              >
+                star
+              </mat-icon>
+            }
+            <span class="text-xs text-default-500 ml-1">{{ product.rating.toFixed(1) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+
+  <!-- Paginación -->
+  @if (totalPages > 1) {
+    <div class="flex justify-center mt-8">
+      <mat-paginator
+        [length]="products.length"
+        [pageSize]="productsPerPage"
+        [pageIndex]="currentPage - 1"
+        (page)="setPage($event.pageIndex + 1)"
+        color="primary"
+      ></mat-paginator>
+    </div>
+  }
+</div>

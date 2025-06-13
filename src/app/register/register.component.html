@@ -1,0 +1,172 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <div class="logo">
+        <mat-icon>shopping_bag</mat-icon>
+        <h1>BlueMart</h1>
+      </div>
+      <h2>Crear una cuenta</h2>
+      <p>Únete a nuestra comunidad y disfruta de una mejor experiencia de compra</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name" placeholder="Tu nombre">
+          <mat-icon matPrefix>person</mat-icon>
+          @if (registerForm.get('name')?.hasError('required')) {
+            <mat-error>
+              El nombre es obligatorio
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Segundo nombre</mat-label>
+          <input matInput formControlName="middleName" placeholder="Tu segundo nombre">
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Nombre de usuario</mat-label>
+          <input matInput formControlName="username" placeholder="Usuario">
+          <mat-icon matPrefix>account_circle</mat-icon>
+          @if (registerForm.get('username')?.hasError('required')) {
+            <mat-error>
+              El nombre de usuario es obligatorio
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Apodo</mat-label>
+          <input matInput formControlName="nickname" placeholder="Apodo (opcional)">
+          <mat-icon matPrefix>face</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="ejemplo@correo.com">
+        <mat-icon matPrefix>email</mat-icon>
+        @if (registerForm.get('email')?.hasError('required')) {
+          <mat-error>
+            El correo electrónico es obligatorio
+          </mat-error>
+        }
+        @if (registerForm.get('email')?.hasError('email')) {
+          <mat-error>
+            Por favor, introduce un correo electrónico válido
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="phoneNumber" placeholder="Número de teléfono">
+        <mat-icon matPrefix>phone</mat-icon>
+        @if (registerForm.get('phoneNumber')?.hasError('required')) {
+          <mat-error>
+            El teléfono es obligatorio
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="address" placeholder="Tu dirección">
+        <mat-icon matPrefix>home</mat-icon>
+        @if (registerForm.get('address')?.hasError('required')) {
+          <mat-error>
+            La dirección es obligatoria
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+        <mat-icon matPrefix>lock</mat-icon>
+        <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if (registerForm.get('password')?.hasError('required')) {
+          <mat-error>
+            La contraseña es obligatoria
+          </mat-error>
+        }
+        @if (registerForm.get('password')?.hasError('minlength')) {
+          <mat-error>
+            La contraseña debe tener al menos 8 caracteres
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Confirmar contraseña</mat-label>
+        <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword">
+        <mat-icon matPrefix>lock</mat-icon>
+        <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" type="button">
+          <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        @if (registerForm.get('confirmPassword')?.hasError('required')) {
+          <mat-error>
+            La confirmación de contraseña es obligatoria
+          </mat-error>
+        }
+        @if (registerForm.get('confirmPassword')?.hasError('passwordMismatch')) {
+          <mat-error>
+            Las contraseñas no coinciden
+          </mat-error>
+        }
+      </mat-form-field>
+
+      <div class="terms-checkbox">
+        <mat-checkbox formControlName="acceptTerms">
+          Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de Privacidad</a>
+        </mat-checkbox>
+        @if (registerForm.get('acceptTerms')?.hasError('required') && registerForm.get('acceptTerms')?.touched) {
+          <mat-error>
+            Debes aceptar los términos y condiciones para continuar
+          </mat-error>
+        }
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="register-button"
+        [disabled]="registerForm.invalid || isLoading">
+        @if (!isLoading) {
+          <span>Crear cuenta</span>
+        }
+        @if (isLoading) {
+          <mat-spinner diameter="24"></mat-spinner>
+        }
+      </button>
+
+      <div class="divider">
+        <span>O registrarse con</span>
+      </div>
+
+      <div class="social-buttons">
+        <button mat-stroked-button type="button" class="google-button">
+          <img src="assets/icons/google.svg" alt="Google">
+          Google
+        </button>
+        <button mat-stroked-button type="button" class="facebook-button">
+          <img src="assets/icons/facebook.svg" alt="Facebook">
+          Facebook
+        </button>
+      </div>
+
+      <div class="login-link">
+        ¿Ya tienes una cuenta? <a routerLink="/login">Iniciar sesión</a>
+      </div>
+    </form>
+  </div>
+</div>

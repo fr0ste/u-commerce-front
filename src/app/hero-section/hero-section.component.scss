@@ -1,0 +1,151 @@
+:host {
+  display: block;
+}
+
+// Grid layout
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+// Primary card (left side)
+.primary-card {
+  padding: 2rem;
+  background: linear-gradient(to right, var(--mat-primary-color), var(--mat-primary-darker-color, #1e40af));
+  color: white;
+  height: 100%;
+}
+
+// Flex utilities
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+// Text utilities
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.opacity-90 {
+  opacity: 0.9;
+}
+
+.text-white-80 {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+// Button styling
+.action-button {
+  font-weight: 600;
+  
+  mat-icon {
+    margin-left: 0.25rem;
+  }
+}
+
+.learn-more-button {
+  font-weight: 600;
+  color: white;
+  border-color: white;
+}
+
+.small-button {
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+// Image card (right side)
+.image-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.relative {
+  position: relative;
+}
+
+.min-h-300 {
+  min-height: 300px;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: white;
+}
+
+// Media queries
+@media (min-width: 1024px) {
+  .lg\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
