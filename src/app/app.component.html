@@ -9,63 +9,65 @@
 
       <!-- Menú simplificado para las páginas de autenticación (login y register) -->
       @if (isAuthPage) {
-      <div class="flex items-center">
-        <button class="text-white hover:opacity-80 transition-opacity" mat-button
-          (click)="navigateTo('home')" style="color: white;">
-          Home
-        </button>
-      </div>
-      } @else {
-      <!-- Menú normal para el resto de páginas -->
-      <div class="hidden sm:flex gap-4">
-        <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isHomePage"
-          (click)="navigateTo('home')" style="color: white;">
-          Home
-        </button>
-        <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isShopPage"
-          (click)="navigateTo('shop')" style="color: white;">
-          Shop
-        </button>
-        <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isCategoriesPage"
-          (click)="navigateTo('categories')" style="color: white;">
-          Categories
-        </button>
-        <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isDealsPage"
-          (click)="navigateTo('deals')" style="color: white;">
-          Deals
-        </button>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <mat-form-field appearance="outline" class="hidden lg:flex max-w-[15rem] h-10 search-field">
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput [(ngModel)]="searchQuery" (keyup.enter)="search()" class="text-sm" />
-        </mat-form-field>
-
         <div class="flex items-center">
-          <button mat-icon-button (click)="navigateTo('login')" style="color: white;" matTooltip="Iniciar sesión">
-            <mat-icon>login</mat-icon>
+          <button class="text-white hover:opacity-80 transition-opacity" mat-button
+            (click)="navigateTo('home')" style="color: white;">
+            Home
           </button>
-          
-          <button mat-icon-button (click)="navigateTo('register')" style="color: white;" matTooltip="Registrarse">
-            <mat-icon>person_add</mat-icon>
+        </div>
+      } @else {
+        <!-- Menú normal para el resto de páginas -->
+        <div class="hidden sm:flex gap-4">
+          <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isHomePage"
+            (click)="navigateTo('home')" style="color: white;">
+            Home
+          </button>
+          <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isShopPage"
+            (click)="navigateTo('shop')" style="color: white;">
+            Shop
+          </button>
+          <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isCategoriesPage"
+            (click)="navigateTo('categories')" style="color: white;">
+            Categories
+          </button>
+          <button class="text-white hover:opacity-80 transition-opacity" mat-button [class.font-medium]="isDealsPage"
+            (click)="navigateTo('deals')" style="color: white;">
+            Deals
           </button>
         </div>
 
-        <button mat-icon-button style="color: white;">
-          <mat-icon>favorite</mat-icon>
-        </button>
+        <div class="flex items-center gap-2">
+          <mat-form-field appearance="outline" class="hidden lg:flex max-w-[15rem] h-10 search-field">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput [(ngModel)]="searchQuery" (keyup.enter)="search()" class="text-sm" />
+          </mat-form-field>
 
-        <button mat-icon-button (click)="toggleCart()" style="color: white;">
-          <div class="relative">
-            <mat-icon>shopping_cart</mat-icon>
-            <span *ngIf="cartService.totalItems > 0"
-              class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-xs font-bold text-primary">
-              {{ cartService.totalItems }}
-            </span>
+          <div class="flex items-center">
+            <button mat-icon-button (click)="navigateTo('login')" style="color: white;" matTooltip="Iniciar sesión">
+              <mat-icon>login</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="navigateTo('register')" style="color: white;" matTooltip="Registrarse">
+              <mat-icon>person_add</mat-icon>
+            </button>
           </div>
-        </button>
-      </div>
+
+          <button mat-icon-button style="color: white;">
+            <mat-icon>favorite</mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="toggleCart()" style="color: white;">
+            <div class="relative">
+              <mat-icon>shopping_cart</mat-icon>
+              @if (cartService.totalItems > 0) {
+                <span
+                  class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-xs font-bold text-primary">
+                  {{ cartService.totalItems }}
+                </span>
+              }
+            </div>
+          </button>
+        </div>
       }
     </div>
   </mat-toolbar>
@@ -75,55 +77,55 @@
     <div class="container mx-auto px-4 py-8">
       <!-- Home Page -->
       @if (isHomePage) {
-      <app-hero-section></app-hero-section>
-      <app-featured-categories (viewAllClick)="onViewAllCategories()"></app-featured-categories>
+        <app-hero-section></app-hero-section>
+        <app-featured-categories (viewAllClick)="onViewAllCategories()"></app-featured-categories>
 
-      <section class="my-12">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-semibold text-primary">Featured Products</h2>
-          <button mat-button color="primary" (click)="navigateTo('shop')" class="flex items-center">
-            View All
-            <mat-icon>arrow_right</mat-icon>
-          </button>
-        </div>
-        <app-product-grid></app-product-grid>
-      </section>
+        <section class="my-12">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold text-primary">Featured Products</h2>
+            <button mat-button color="primary" (click)="navigateTo('shop')" class="flex items-center">
+              View All
+              <mat-icon>arrow_right</mat-icon>
+            </button>
+          </div>
+          <app-product-grid></app-product-grid>
+        </section>
       }
 
       <!-- Categories Page -->
       @if (isCategoriesPage) {
-      <app-categories-page></app-categories-page>
+        <app-categories-page></app-categories-page>
       }
 
       <!-- Checkout Page -->
       @if (isCheckoutPage) {
-      <app-checkout-page (back)="onCheckoutBack()"></app-checkout-page>
+        <app-checkout-page (back)="onCheckoutBack()"></app-checkout-page>
       }
 
       <!-- Login Page -->
       @if (isLoginPage) {
-      <app-login></app-login>
+        <app-login></app-login>
       }
 
       <!-- Register Page -->
       @if (isRegisterPage) {
-      <app-register></app-register>
+        <app-register></app-register>
       }
 
       <!-- Other Pages (Shop, Deals) -->
       @if (isShopPage || isDealsPage) {
-      <div class="py-12 text-center">
-        <h2 class="text-2xl font-semibold text-primary mb-4">
-          {{ currentPage | titlecase }} Page
-        </h2>
-        <p class="text-gray-600 mb-6">
-          This page is under construction. Coming soon!
-        </p>
-        <button mat-raised-button color="primary" (click)="navigateTo('home')" class="flex items-center mx-auto">
-          <mat-icon>arrow_back</mat-icon>
-          Back to Home
-        </button>
-      </div>
+        <div class="py-12 text-center">
+          <h2 class="text-2xl font-semibold text-primary mb-4">
+            {{ currentPage | titlecase }} Page
+          </h2>
+          <p class="text-gray-600 mb-6">
+            This page is under construction. Coming soon!
+          </p>
+          <button mat-raised-button color="primary" (click)="navigateTo('home')" class="flex items-center mx-auto">
+            <mat-icon>arrow_back</mat-icon>
+            Back to Home
+          </button>
+        </div>
       }
     </div>
   </main>
