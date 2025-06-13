@@ -7,8 +7,8 @@
         <span class="font-bold text-white text-inherit ml-2">{{ title }}</span>
       </div>
 
-      <!-- Menú simplificado para la página de login -->
-      @if (isLoginPage) {
+      <!-- Menú simplificado para las páginas de autenticación (login y register) -->
+      @if (isAuthPage) {
       <div class="flex items-center">
         <button class="text-white hover:opacity-80 transition-opacity" mat-button
           (click)="navigateTo('home')" style="color: white;">
@@ -42,9 +42,15 @@
           <input matInput [(ngModel)]="searchQuery" (keyup.enter)="search()" class="text-sm" />
         </mat-form-field>
 
-        <button mat-icon-button (click)="navigateTo('login')" style="color: white;">
-          <mat-icon>person</mat-icon>
-        </button>
+        <div class="flex items-center">
+          <button mat-icon-button (click)="navigateTo('login')" style="color: white;" matTooltip="Iniciar sesión">
+            <mat-icon>login</mat-icon>
+          </button>
+          
+          <button mat-icon-button (click)="navigateTo('register')" style="color: white;" matTooltip="Registrarse">
+            <mat-icon>person_add</mat-icon>
+          </button>
+        </div>
 
         <button mat-icon-button style="color: white;">
           <mat-icon>favorite</mat-icon>
@@ -97,6 +103,11 @@
       <!-- Login Page -->
       @if (isLoginPage) {
       <app-login></app-login>
+      }
+
+      <!-- Register Page -->
+      @if (isRegisterPage) {
+      <app-register></app-register>
       }
 
       <!-- Other Pages (Shop, Deals) -->

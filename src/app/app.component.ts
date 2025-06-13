@@ -19,6 +19,7 @@ import { ProductGridComponent } from "./product-grid/product-grid.component";
 import { ShoppingCartComponent } from "./shopping-cart/shopping-cart.component";
 import { CartService } from "./cart-context/cart.service";
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ import { LoginComponent } from './login/login.component';
     FeaturedCategoriesComponent, 
     FooterComponent, 
     LoginComponent,
+    RegisterComponent,
     HeroSectionComponent, 
     ProductGridComponent, 
     ShoppingCartComponent,
@@ -48,7 +50,7 @@ import { LoginComponent } from './login/login.component';
 })
 export class AppComponent implements OnInit {
   title = 'BlueMart';
-  currentPage: 'home' | 'shop' | 'categories' | 'deals' | 'checkout' | 'login' = 'home';
+  currentPage: 'home' | 'shop' | 'categories' | 'deals' | 'checkout' | 'login' | 'register' = 'home';
   selectedCategoryId: number | null = null;
   searchQuery = '';
 
@@ -65,7 +67,7 @@ export class AppComponent implements OnInit {
     this.cartService.toggleCart();
   }
 
-  navigateTo(page: 'home' | 'shop' | 'categories' | 'deals' | 'checkout' | 'login'): void {
+  navigateTo(page: 'home' | 'shop' | 'categories' | 'deals' | 'checkout' | 'login' | 'register'): void {
     this.currentPage = page as any;
     this.selectedCategoryId = null;
     window.scrollTo(0, 0);
@@ -114,5 +116,13 @@ export class AppComponent implements OnInit {
 
   get isLoginPage(): boolean {
     return this.currentPage === 'login';
+  }
+
+  get isRegisterPage(): boolean {
+    return this.currentPage === 'register';
+  }
+
+  get isAuthPage(): boolean {
+    return this.isLoginPage || this.isRegisterPage;
   }
 }
