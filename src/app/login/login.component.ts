@@ -57,7 +57,7 @@ export class LoginComponent {
     }
     
     this.isLoading = true;
-    const { email, password } = this.loginForm.value;
+    const { email, password, rememberMe } = this.loginForm.value;
     
     const loginRequest = {
       email,
@@ -68,6 +68,12 @@ export class LoginComponent {
       next: (response) => {
         console.log('Login successful:', response);
         this.isLoading = false;
+        
+        // Mostrar mensaje de éxito
+        this.snackBar.open('Inicio de sesión exitoso', 'Cerrar', {
+          duration: 3000
+        });
+        
         // Redireccionar al home
         this.router.navigate(['/']);
       },
